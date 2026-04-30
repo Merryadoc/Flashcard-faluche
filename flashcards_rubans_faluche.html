@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcards — Rubans de la faluche</title>
+<style>
+  :root {
+    --bg: #faf9f5; --surface: #ffffff; --surface-2: #f4f2ea;
+    --text: #1a1a1a; --text-2: #6b6b6b; --text-3: #a0a0a0;
+    --border: rgba(0,0,0,0.1); --accent: #1a1a1a;
+    --create: #5b3a8a; --create-bg: #ece4f7;
+    --todo: #b08a3a; --todo-bg: #faf0d6;
+    --ancien: #4a4a4a; --ancien-bg: #ebebeb;
+      
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a; --surface: #2a2a2a; --surface-2: #262626;
+      --text: #f0f0f0; --text-2: #a0a0a0; --text-3: #6b6b6b;
+      --border: rgba(255,255,255,0.1); --accent: #f0f0f0;
+      --create: #b89dee; --create-bg: #2e2540;
+      --todo: #e0c47a; --todo-bg: #3a3220;
+      --ancien: #b0b0b0; --ancien-bg: #303030;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 2rem 1rem; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+  h1 { font-size: 20px; font-weight: 500; margin: 0 0 2rem; text-align: center; }
+  .fc-wrap { width: 100%; max-width: 620px; }
+  .fc-header { display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 14px; font-size: 13px; color: var(--text-2); }
+  .fc-count { font-weight: 500; color: var(--text); }
+  .fc-mode { display: flex; gap: 6px; }
+  button { font-family: inherit; font-size: 12px; padding: 6px 10px;
+    background: transparent; color: var(--text); border: 0.5px solid var(--border);
+    border-radius: 8px; cursor: pointer; transition: background 0.15s ease, transform 0.1s ease; }
+  button:hover { background: var(--surface-2); }
+  button:active { transform: scale(0.98); }
+  .fc-progress { height: 3px; background: var(--surface-2); border-radius: 2px;
+    overflow: hidden; margin-bottom: 14px; }
+  .fc-progress-bar { height: 100%; background: var(--accent); transition: width 0.3s ease; }
+  .fc-stage { perspective: 1400px; margin-bottom: 16px; }
+  .fc-card { position: relative; width: 100%; min-height: 540px; cursor: pointer;
+    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
+  .fc-card.flipped { transform: rotateY(180deg); }
+  .fc-face { position: absolute; inset: 0; backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; display: flex; flex-direction: column;
+    padding: 1.5rem 1.5rem 2rem; background: var(--surface);
+    border: 0.5px solid var(--border); border-radius: 14px; overflow-y: auto; }
+  .fc-front { align-items: center; justify-content: center; text-align: center; }
+  .fc-back { transform: rotateY(180deg); background: var(--surface-2); }
+  .fc-label { font-size: 12px; color: var(--text-2); margin-bottom: 14px;
+    letter-spacing: 0.02em; text-align: center; }
+  .fc-icon { font-size: 42px; margin-bottom: 14px; }
+  .fc-name { font-size: 28px; font-weight: 500; line-height: 1.3; }
+  .fc-back-name { font-size: 18px; font-weight: 500; line-height: 1.3;
+    text-align: center; margin-bottom: 14px; padding-bottom: 12px;
+    border-bottom: 0.5px solid var(--border); }
+  .fc-section { margin-bottom: 14px; }
+  .fc-section-title { font-size: 11px; color: var(--text-2);
+    letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 6px; }
+  .fc-signif { font-size: 13.5px; line-height: 1.55; }
+  .fc-porteurs { display: flex; flex-wrap: wrap; gap: 6px; }
+  .fc-porteur { font-size: 12px; padding: 4px 10px; background: var(--surface);
+    border: 0.5px solid var(--border); border-radius: 8px; }
+  .fc-porteur.create { background: var(--create-bg); color: var(--create);
+    border-color: transparent; font-weight: 500; }
+  .fc-porteur.todo { background: var(--todo-bg); color: var(--todo);
+    border-color: transparent; font-style: italic; }
+  .fc-porteur.ancien {background: var(--ancien-bg); color: var(--ancien);border-color: transparent; font-style: italic;}
+  .fc-empty { font-size: 13px; color: var(--text-3); font-style: italic; }
+  .fc-hint { text-align: center; font-size: 11px; color: var(--text-3);
+    margin-top: auto; padding-top: 10px; }
+  .fc-controls { display: flex; gap: 8px; }
+  .fc-controls button { flex: 1; padding: 10px 12px; font-size: 14px; }
+  .fc-help { margin-top: 16px; text-align: center; font-size: 11px;
+    color: var(--text-3); line-height: 1.7; }
+  .legend { display: inline-block; padding: 2px 8px; border-radius: 6px; font-weight: 500; }
+  .legend.ancien { background: var(--ancien-bg); color: var(--ancien); font-style: italic; }
+  .legend.create { background: var(--create-bg); color: var(--create); }
+  .legend.todo { background: var(--todo-bg); color: var(--todo); font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1>Rubans de la faluche</h1>
+
+<div class="fc-wrap">
+  <div class="fc-header">
+    <span>Ruban <span class="fc-count" id="fc-position">1 / 27</span></span>
+    <div class="fc-mode">
+      <button id="fc-btn-shuffle">Mélanger</button>
+      <button id="fc-btn-reset">Reset</button>
+    </div>
+  </div>
+
+  <div class="fc-progress"><div class="fc-progress-bar" id="fc-bar" style="width: 3.7%;"></div></div>
+
+  <div class="fc-stage">
+    <div class="fc-card" id="fc-card">
+      <div class="fc-face fc-front">
+        <div class="fc-label">Ruban</div>
+        <div class="fc-icon" id="fc-icon">—</div>
+        <div class="fc-name" id="fc-name">—</div>
+        <div class="fc-hint">Clique pour révéler</div>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="fc-back-name" id="fc-back-name">—</div>
+        <div class="fc-section">
+          <div class="fc-section-title">Signification</div>
+          <div class="fc-signif" id="fc-signif">—</div>
+        </div>
+        <div class="fc-section" id="fc-creators-section">
+          <div class="fc-section-title">Créateurs</div>
+          <div class="fc-porteurs" id="fc-creators"></div>
+        </div>
+        <div class="fc-section">
+          <div class="fc-section-title">Porteurs actuels (<span id="fc-count-porteurs">0</span>)</div>
+          <div class="fc-porteurs" id="fc-porteurs"></div>
+        </div>
+        <div class="fc-section" id="fc-anciens-section">
+          <div class="fc-section-title">Anciens porteurs</div>
+          <div class="fc-porteurs" id="fc-anciens"></div>
+</div>
+        <div class="fc-hint">Clique pour retourner</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fc-controls">
+    <button id="fc-prev">← Précédent</button>
+    <button id="fc-flip">Retourner</button>
+    <button id="fc-next">Suivant →</button>
+  </div>
+
+  <div class="fc-help">
+    Raccourcis : <strong>Espace</strong> retourne · <strong>←/→</strong> navigue · <strong>S</strong> mélange<br>
+    Légende : <span class="legend create">Créateur</span> · <span class="legend todo">Vérifier dans Notion</span> · <span class="legend ancien">Ancien porteur</span>
+  </div>
+</div>
+
+<script>
+const DATA = [
+  {
+    nom: "A2SUP", icon: "📚",
+    signif: "Entrecroisé de satin bordeaux tirant vers le violet pour les LAS Sciences et les couleurs de l'UP, satin jaune des LAS SH et de la représentation étudiante, velours blanc du PASS (couleur neutre pour toutes les filières de santé) et de l'entraide",
+    createurs: ["Rainha Bianca", "Nutz", "Robin des Bois intronisé Liber Pater"],
+    porteurs: ["Quasar KO intronisé KRONOS", "WreckingBi intronisée Tsunade", "MasterΩmind", "Pink Lady Di", "Charlie CaChill", "Tabass'coco", "Wander Woman", "Jean Barde de la Fontaine", "Zaza la Débrouille", "MadJackAss", "Magnum", "Vanellope", "Aphrodisias", "Lilith", "Frère TRIboulet", "Président GrothenDick", "Osono Di Dolto", "+4", "+ 10 autres porteurs"]
+  },
+  {
+    nom: "ACRP", icon: "🦁",
+    signif: "Entrecroisé de velours vert de la peau du serpent et rouge pour son regard, couleurs de l'AMPC et de l'AVC, et blanc nacré de la peau du lion",
+    createurs: ["Darkstiny's Child intronisée Dalaï-Mamma"],
+    porteurs: ["Néo intronisé Dracarys réintronisé Haku 2.0", "Président GrothenDick", "Père Castor", "Vicomte de Rostand", "Lafayette", "Yûkisen"], 
+    anciens: [] 
+  },
+  {
+    nom: "AGEP", icon: "🗼",
+    signif: "Croision de velours bleu et rouge sur satin lilas",
+    createurs: ["Sodomikibite"],
+    porteurs: ["Osono Di Dolto", "Iris de Yourcenar"],
+    anciens: [] 
+  },
+  {
+    nom: "AMPc", icon: "🎀",
+    signif: "Satin bleu clair de Cochin, velours blanc de Necker et velours orange de Broussais Hôtel-Dieu — porté par tous les faluchards de Paris Descartes (et ceux de l'UP ayant été à un moment étudiants à Paris Descartes)",
+    createurs: ["Sodomikibite"],
+    porteurs: [],
+    anciens: ["Brainbowt33n","Kcalashnikoff 1.1", "Rainha Bianca", "Art Pop !"] 
+  },
+  {
+    nom: "ANEMF", icon: "🇫🇷",
+    signif: "Administrateur ⇒ Ruban tricolore simple ; Membre du bureau, VP et CM ⇒ Ruban tricolore entouré de 2 liserés blancs ; Président ⇒ Ruban tricolore entouré de 2 bandes blanches",
+    createurs: [],
+    porteurs: ["Père Castor", "Lafayette"],
+    anciens: [] 
+  },
+  {
+    nom: "BDA", icon: "👨🏻‍🎨",
+    signif: "Velours vert prairie sur vert bouteille, couleurs des 2 premiers pulls verts de l'asso",
+    createurs: ["Nazdrowje"],
+    porteurs: ["Vicomte de Rostand", "La Môme", "Zaza la Débrouille", "Dr WHATson", "Paloma", "Devos", "Frère TRIboulet", "MasterΩmind", "Yûkisen", "Volt intronisé Argors", "Amateraus 1.1", "Satyricus intronisé Arthas", "Mademoiselle Bean", "Auguste", "Demos L'Azadi"],
+    anciens: ["Micromégas"] 
+  },
+  {
+    nom: "BDL", icon: "🌐",
+    signif: "Velours blanc poutré de velours orange",
+    createurs: ["Simba"],
+    porteurs: ["Néo intronisé Dracarys réintronisé Haku 2.0", "Dr WHATson", "L'Affranchie"], 
+    anciens: []
+  },
+  {
+    nom: "BDS", icon: "🎽",
+    signif: "Velours bleu et rouge, couleurs du Rugby Club de Bichat",
+    createurs: ["Biscotte"],
+    porteurs: ["Pierrot", "Atlas L'Insoumis", "D'Artagnan"], 
+    anciens: []
+  },
+  {
+    nom: "Blouses Brothers", icon: "🎼",
+    signif: "Velours rouge sur velours noir, pour le sang qui coule des oreilles",
+    createurs: ["Frère Frakass"],
+    porteurs: ["Imhotep", "Måneskin", "L'Alchimiste"], 
+    anciens: []
+  },
+  {
+    nom: "C2P1", icon: "🎀",
+    signif: "Velours fuschia, violet et rouge",
+    createurs: ["Sodomikibite"],
+    porteurs: [], 
+    anciens: ["Rainha Bianca", "Maverick", "Robin des Bois intronisé Liber Pater", "Pr. Gusteau"]
+  },
+  {
+    nom: "CNCP", icon: "🟡",
+    signif: "Le rayonnement du cercle sur l'écume en pleine mer ⇒ Ruban de velours jaune pour le soleil tressé de velours blanc de l'écume et bleu foncé des abysses",
+    createurs: ["Pendragon", "Nautilus", "Hemingwait intronisé Amercurian Pie", "Loyal", "Maître Lupin"],
+    porteurs: ["Pierrot", "JOKER", "Bartholomeus", "Perséphone", "Spirit", "L'Alchimiste"], 
+    anciens: []
+  },
+  {
+    nom: "CRS", icon: "👹",
+    signif: "Cuir noir de Bichat violence sur velours rose des critards de PD et velours bordeaux des critards de l'UP",
+    createurs: ["Bès le Furieux"],
+    porteurs: ["Kirby", "Quasar KO intronisé KRONOS", "Néo intronisé Dracarys réintronisé Haku 2.0", "MadJackAss", "Magnum", "GOReGONEION", "Tsar Ricard", "Nuwanda", "Mayhem", "Dice Diavolus", "+ 22 autres porteurs (non résolus)"], 
+    anciens: []
+  },
+  {
+    nom: "CSM", icon: "🎀",
+    signif: "Velours bleu de la 8.6 entrecroisé de velours blanc pour la neige et la solidarité sous le ruban pailleté pour le Mica (pôle été > pôle hiver)",
+    createurs: ["Zéphyr"],
+    porteurs: [], 
+    anciens: []
+  },
+  {
+    nom: "Heartbeats", icon: "🎇",
+    signif: "Ruban arc-en-ciel du désordre critard du son (en satin car pas que santé) entrecroisé de ruban pailleté pour la fête et d'un liseré rouge pour la médecine",
+    createurs: ["Imhotep", "Måneskin"],
+    porteurs: [], 
+    anciens: []
+  },
+  {
+    nom: "Humanitaire et environnemental", icon: "🎀",
+    signif: "Velours blanc",
+    createurs: [],
+    porteurs: ["Wander Woman", "Yûkisen", "Le Soliste"], 
+    anciens: []
+  },
+  {
+    nom: "Hygie", icon: "🐍",
+    signif: "Velours blanc de la santé tressé de velours vert du serpent et noir pailleté pour les flashs des soirées, et qu'ils font briller la filière en soirée",
+    createurs: ["Psychée", "Coq au vin", "ACAB"],
+    porteurs: ["Néo intronisé Dracarys réintronisé Haku 2.0", "Mayhem", "Lempicka", "Kat Knight", "Charlie CaChill", "Hécaté"], 
+    anciens: []
+  },
+  {
+    nom: "Journal de la fac", icon: "🎀",
+    signif: "Satin blanc",
+    createurs: [],
+    porteurs: ["Kirby"], 
+    anciens: []
+  },
+  {
+    nom: "L'Artésienne", icon: "👯",
+    signif: "Satin blanc sur bordeaux",
+    createurs: ["Aziz"],
+    porteurs: [], 
+    anciens: ["Divan de Kamp intronisé Khaleesi"]
+  },
+  {
+    nom: "LCS", icon: "🐎",
+    signif: "Velours noir et blanc de l'échiquier sur satin bleu de la Seine",
+    createurs: ["Billy Jones l'Exalté"],
+    porteurs: ["Merryadoc", "Néo intronisé Dracarys réintronisé Haku 2.0", "Amateraus 1.1", "Cheng D.Teach", "Atlas L'Insoumis", "Kermit le FUNambule"], 
+    anciens: ["L'Âne Trotro"]
+  },
+  {
+    nom: "Médicus musica", icon: "🎶",
+    signif: "Satin doré sur croisillons de velours blanc et bleu pour les flash de la scène",
+    createurs: ["Poison Ivy"],
+    porteurs: ["Alice in Lalaland"], 
+    anciens: ["Rainha Bianca","Mercury", "La Castafiore"]
+  },
+  {
+    nom: "NEMO", icon: "🐠",
+    signif: "Tresses de satin noir et blanc sur satin orange, rayures du poisson clown",
+    createurs: ["KK maro"],
+    porteurs: ["Colombe"], 
+    anciens: ["Armor Amore"]
+  },
+  {
+    nom: "OTC", icon: "🟣",
+    signif: "Satin violet entrecroisé de velours noir et blanc",
+    createurs: ["Sherloque"],
+    porteurs: ["Vanellope", "Armor Amore", "WreckingBi intronisée Tsunade", "Quasar KO intronisé KRONOS", "Snoop Doug", "Kirby", "Jean Barde de la Fontaine", "Wander Woman", "Osono Di Dolto", "Jean Faon de Polichinel", "Aphrodisias", "Dame Arlequin", "Gamabunta", "Plot Twist", "Boule de Neige", "Devos", "Yûkisen"], 
+    anciens: []
+  },
+  {
+    nom: "Pink Ladies", icon: "🦩",
+    signif: "Satin gris pailleté, velours rose et blanc",
+    createurs: ["Peter Paon Intronisé Crazy HOErse", "Swalalala"],
+    porteurs: [], 
+    anciens: ["Brainbowt33n", "Haieley Queen", "Don KidShock"]
+  },
+  {
+    nom: "Plaies Mobiles", icon: "🎷",
+    signif: "Tissu de combar orange entrecroisé de ruban pailleté doré et argenté",
+    createurs: ["Titania"],
+    porteurs: ["Marco dit Le Borgne"], 
+    anciens: []
+  },
+  {
+    nom: "Solid'UP", icon: "🤲🏻",
+    signif: "Ruban tressé de velours blanc de la solidarité entrecroisé d'une petite main et d'une grande main de satin bleu, une main qui donne et une main qui reçoit",
+    createurs: ["Snoop Doug", "Oompa Loumpette"],
+    porteurs: ["Ymir", "Sirius", "Wander Woman", "WreckingBi intronisée Tsunade", "Bastet", "Fulmina", "Oompa Loumpette", "Paloma", "Tabass'coco", "Charlie CaChill", "Jean le Clown intronisé NIKA", "Carmen"], 
+    anciens: []
+  },
+  {
+    nom: "Team UP", icon: "📕",
+    signif: "Velours rouge et bordeaux sur velours blanc",
+    createurs: ["Molière le Philantrope"],
+    porteurs: ["Måneskin"], 
+    anciens: ["Inari le Mélodieux", "Mamma Mia !"]
+  },
+  {
+    nom: "UP", icon: "🆙",
+    signif: "Velours rose de PD et velours blanc enroulé sur un satin bordeaux pour les couleurs de l'UP qui est une fac de santé mais pas que. Et 1 seul chat de Bichat car on a perdu l'autre à la fusion",
+    createurs: ["Darkstiny's Child intronisée Dalaï-Mamma", "Peter Paon Intronisé Crazy HOErse", "Lotus"],
+    porteurs: ["Tous les falchards baptisé à l'UP"]
+  }
+];
+
+let deck = DATA.slice();
+let index = 0;
+let flipped = false;
+
+const elCard = document.getElementById('fc-card');
+const elIcon = document.getElementById('fc-icon');
+const elName = document.getElementById('fc-name');
+const elBackName = document.getElementById('fc-back-name');
+const elSignif = document.getElementById('fc-signif');
+const elCreators = document.getElementById('fc-creators');
+const elCreatorsSection = document.getElementById('fc-creators-section');
+const elPorteurs = document.getElementById('fc-porteurs');
+const elCountPorteurs = document.getElementById('fc-count-porteurs');
+const elPos = document.getElementById('fc-position');
+const elBar = document.getElementById('fc-bar');
+const elAnciens = document.getElementById('fc-anciens');
+const elAnciensSection = document.getElementById('fc-anciens-section');
+    
+function isTodo(name) {
+  return name.startsWith('+ ') || name.includes('(non résolu') || name === '(à compléter)';
+}
+
+function render() {
+  const c = deck[index];
+  elIcon.textContent = c.icon;
+  elName.textContent = c.nom;
+  elBackName.textContent = c.icon + ' ' + c.nom;
+  elSignif.textContent = c.signif;
+
+  elCreators.innerHTML = '';
+  if (c.createurs.length === 0) {
+    elCreatorsSection.style.display = 'none';
+  } else {
+    elCreatorsSection.style.display = '';
+    c.createurs.forEach(n => {
+      const span = document.createElement('span');
+      span.className = isTodo(n) ? 'fc-porteur todo' : 'fc-porteur create';
+      span.textContent = n;
+      elCreators.appendChild(span);
+    });
+  }
+
+  elPorteurs.innerHTML = '';
+  // Compter le nombre réel de porteurs (les "+ N autres" en comptent N)
+  let totalPorteurs = 0;
+  c.porteurs.forEach(n => {
+    const m = n.match(/\+ (\d+)/);
+    if (m) totalPorteurs += parseInt(m[1]);
+    else totalPorteurs += 1;
+  });
+  elCountPorteurs.textContent = totalPorteurs;
+
+  if (c.porteurs.length === 0) {
+    const span = document.createElement('span');
+    span.className = 'fc-empty';
+    span.textContent = 'Aucun porteur actuel';
+    elPorteurs.appendChild(span);
+  } else {
+    c.porteurs.forEach(n => {
+      const span = document.createElement('span');
+      span.className = isTodo(n) ? 'fc-porteur todo' : 'fc-porteur';
+      span.textContent = n;
+      elPorteurs.appendChild(span);
+    });
+  }
+// Anciens porteurs
+elAnciens.innerHTML = '';
+if (!c.anciens || c.anciens.length === 0) {
+  elAnciensSection.style.display = 'none';
+} else {
+  elAnciensSection.style.display = '';
+  c.anciens.forEach(n => {
+    const span = document.createElement('span');
+    span.className = isTodo(n) ? 'fc-porteur todo' : 'fc-porteur ancien';
+    span.textContent = n;
+    elAnciens.appendChild(span);
+  });
+}
+  elPos.textContent = (index + 1) + ' / ' + deck.length;
+  elBar.style.width = Math.round(((index + 1) / deck.length) * 100) + '%';
+  flipped = false;
+  elCard.classList.remove('flipped');
+}
+
+function flip() { flipped = !flipped; elCard.classList.toggle('flipped', flipped); }
+function next() { index = (index + 1) % deck.length; render(); }
+function prev() { index = (index - 1 + deck.length) % deck.length; render(); }
+function shuffle() {
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  index = 0; render();
+}
+function reset() { deck = DATA.slice(); index = 0; render(); }
+
+elCard.addEventListener('click', flip);
+document.getElementById('fc-flip').addEventListener('click', function(e) { e.stopPropagation(); flip(); });
+document.getElementById('fc-next').addEventListener('click', next);
+document.getElementById('fc-prev').addEventListener('click', prev);
+document.getElementById('fc-btn-shuffle').addEventListener('click', shuffle);
+document.getElementById('fc-btn-reset').addEventListener('click', reset);
+
+document.addEventListener('keydown', function(e) {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flip(); }
+  else if (e.key === 'ArrowRight') next();
+  else if (e.key === 'ArrowLeft') prev();
+  else if (e.key === 's' || e.key === 'S') shuffle();
+});
+
+render();
+</script>
+</body>
+</html>
+
+
+
+
