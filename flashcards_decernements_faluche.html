@@ -251,14 +251,14 @@
 
 <div class="fc-wrap">
   <div class="fc-header">
-    <span>Décernement <span class="fc-count" id="fc-position">1 / 36</span></span>
+    <span>Décernement <span class="fc-count" id="fc-position">1 / 49</span></span>
     <div class="fc-mode">
       <button id="fc-btn-shuffle">Mélanger</button>
       <button id="fc-btn-reset">Reset</button>
     </div>
   </div>
 
-  <div class="fc-progress"><div class="fc-progress-bar" id="fc-bar" style="width: 2.7%;"></div></div>
+  <div class="fc-progress"><div class="fc-progress-bar" id="fc-bar" style="width: 2.0%;"></div></div>
 
   <div class="fc-stage">
     <div class="fc-card" id="fc-card">
@@ -299,56 +299,56 @@
 
 <script>
 const DATA = [
-  { nom: "Bacchus", signif: "Dignité dans l'ivresse", porteurs: [], anciens: ["Frère Luron"], ["Hercule"], ["Fraise Tagadagada"] },
+  { nom: "Bacchus", signif: "Dignité dans l'ivresse", porteurs: [], anciens: ["Frère Luron", "Hercule", "Fraise Tagadagada"] },
   { nom: "Bacchus troué", signif: "Buveur d'eau", porteurs: ["Iris de Yourcenar"], anciens: ["Flopazepam.e.s"] },
   { nom: "Sou troué", signif: "Nuit au poste pour motif étudiant", porteurs: [], anciens: ["Gaston"] },
   { nom: "Chauve-souris", signif: "Nuits blanches pour motif associatif", porteurs: ["Gulliver intronisé Khal Drogo", "Dr WHATson", "Imhotep"], anciens: [] },
   { nom: "Fourchette sur ruban bordeaux", signif: "A organisé un grand dîner", porteurs: ["Atlas l'Insoumis", "Gulliver intronisé Khal Drogo"], anciens: [] },
-  { nom: "Fourchette sur ruban bleu", signif: "Cordon bleu", porteurs: ["Atlas l'Insoumis"], anciens: ["Matoaka intronisée La Louve"]["Divan de Kamp intronisé Khaleesi"], ["Belzepute"], ["Pantagruel"], ["W"], ["Marat Kiri"] },
-  { nom: "Balais croisé chope de bière", signif: "Plus beau vomicoptère", porteurs: [], anciens: ["Duper BizHard"], ["Kiss Cool"] },
-  { nom: "Balais à l'endroit", signif: "Fée du logis", porteurs: ["Merryadoc", "La Môme"], anciens: ["Matoaka intronisée la Louve"], ["Kiddo"], ["Cendrillon"], ["La Bayadère"], ["Bès le Furieux"] },
-  { nom: "Balais à l'envers", signif: "Déchet à mettre à la poubelle", porteurs: ["Jean Barde de la Fontaine", "Jean le Clown intronisé Nika", "Néo intronisé Dracarys réintronisé Haku 2.0"], anciens: ["BawdygHard"], ["Gargantua"], ["Talkie-Walkie"], ["Mawy TREZ"] },
-  { nom: "Balais sur ruban d'asso", signif: "Acte héroïque de nettoyage lors d'une mission associative", porteurs: [], anciens: ["Miss Teigne"], ["Reny Coty"], ["Beurk"] },
-  { nom: "Pachyderme", signif: "Gros lourd", porteurs: ["MadJackAss"], anciens: ["Shit Sale"], ["Marquis de Schlague"], ["Action Man"], ["Kiddo"] },
-  { nom: "Entonnoir à l'envers", signif: "Ringard", porteurs: ["Pink Lady Di", "Delirium 7remance"], anciens: ["Mamie Souze II"], ["GaLacSie"] },
-  { nom: "Entonnoir à l'endroit", signif: "Petite caisse", porteurs: [], anciens: ["Brainbowt33n"], ["Nimbus"], ["Kimpossible"] },
-  { nom: "F", signif: "Digne faluchard", porteurs: [], anciens: ["Inari le Mélodieux"], ["Brainbowt33n"], ["Armor Amore"], ["Billy Jones l'Exalté"], ["Rainha Bianca"], ["Dexter"], ["Fantasia"], ["Tony Tony Choper"], ["Petit Jean du Grandgousier"], ["Matoaka intronisée La Louve"], ["Lotus"], ["Django"], ["Appolo dit le Bon], ["Melody"], ["Dr Holmes"], ["THOR"], ["Frère Frakass"], ["Molière le Philanthrope"] },
-  { nom: "Coq", signif: "Grande gueule sachant l'ouvrir, retourné après minuit", porteurs: [], anciens: ["Nimbus"], ["Darkstiny's Child intronisée Dalaï-Mamma"], ["Paon intronisé Crazy HOErse"], ["Techno intronisé Induss 2000"] },
-  { nom: "Epi de blé", signif: "Radin / Gratteur", porteurs: [], anciens: ["Mercury"], ["Don Juan"] },
-  { nom: "Escargot", signif: "Lenteur à la tâche", porteurs: ["Fu J.Yama"], anciens: ["Mamma Mia !"], ["HemingWait intronisé Amercurian Pie"] },
-  { nom: "Volant", signif: "As du volant", porteurs: ["Titania", "Kirby", "Catarina"], anciens: ["Dexter"], ["No Woman No Cry"], ["Forest"], ["Frère Frakass"] },
-  { nom: "Taureau", signif: "Grand reproducteur", porteurs: ["Kirby","Sirius"], anciens: ["Rainha Bianca"], ["Armor Amore"], ["Nimbus"], ["Shit Sale"], ["Bès le Furieux"], ["Nitrogena"], ["Kiddo"], ["Forest"] },
+  { nom: "Fourchette sur ruban bleu", signif: "Cordon bleu", porteurs: ["Atlas l'Insoumis"], anciens: ["Matoaka intronisée La Louve", "Divan de Kamp intronisé Khaleesi", "Belzepute", "Pantagruel", "W", "Marat Kiri"] },
+  { nom: "Balais croisé chope de bière", signif: "Plus beau vomicoptère", porteurs: [], anciens: ["Duper BizHard", "Kiss Cool"] },
+  { nom: "Balais à l'endroit", signif: "Fée du logis", porteurs: ["Merryadoc", "La Môme"], anciens: ["Matoaka intronisée la Louve", "Kiddo", "Cendrillon", "La Bayadère", "Bès le Furieux"] },
+  { nom: "Balais à l'envers", signif: "Déchet à mettre à la poubelle", porteurs: ["Jean Barde de la Fontaine", "Jean le Clown intronisé Nika", "Néo intronisé Dracarys réintronisé Haku 2.0"], anciens: ["BawdygHard", "Gargantua", "Talkie-Walkie", "Mawy TREZ"] },
+  { nom: "Balais sur ruban d'asso", signif: "Acte héroïque de nettoyage lors d'une mission associative", porteurs: [], anciens: ["Miss Teigne", "Reny Coty", "Beurk"] },
+  { nom: "Pachyderme", signif: "Gros lourd", porteurs: ["MadJackAss"], anciens: ["Shit Sale", "Marquis de Schlague", "Action Man", "Kiddo"] },
+  { nom: "Entonnoir à l'envers", signif: "Ringard", porteurs: ["Pink Lady Di", "Delirium 7remance"], anciens: ["Mamie Souze II", "GaLacSie"] },
+  { nom: "Entonnoir à l'endroit", signif: "Petite caisse", porteurs: [], anciens: ["Brainbowt33n", "Nimbus", "Kimpossible"] },
+  { nom: "F", signif: "Digne faluchard", porteurs: [], anciens: ["Inari le Mélodieux", "Brainbowt33n", "Armor Amore", "Billy Jones l'Exalté", "Rainha Bianca", "Dexter", "Fantasia", "Tony Tony Choper", "Petit Jean du Grandgousier", "Matoaka intronisée La Louve", "Lotus", "Django", "Appolo dit le Bon", "Melody", "Dr Holmes", "THOR", "Frère Frakass", "Molière le Philanthrope"] },
+  { nom: "Coq", signif: "Grande gueule sachant l'ouvrir, retourné après minuit", porteurs: [], anciens: ["Nimbus", "Darkstiny's Child intronisée Dalaï-Mamma", "Paon intronisé Crazy HOErse", "Techno intronisé Induss 2000"] },
+  { nom: "Epi de blé", signif: "Radin / Gratteur", porteurs: [], anciens: ["Mercury", "Don Juan"] },
+  { nom: "Escargot", signif: "Lenteur à la tâche", porteurs: ["Fu J.Yama"], anciens: ["Mamma Mia !", "HemingWait intronisé Amercurian Pie"] },
+  { nom: "Volant", signif: "As du volant", porteurs: ["Titania", "Kirby", "Catarina"], anciens: ["Dexter", "No Woman No Cry", "Forest", "Frère Frakass"] },
+  { nom: "Taureau", signif: "Grand reproducteur", porteurs: ["Kirby", "Sirius"], anciens: ["Rainha Bianca", "Armor Amore", "Nimbus", "Shit Sale", "Bès le Furieux", "Nitrogena", "Kiddo", "Forest"] },
   { nom: "Perroquet", signif: "Pinailleur", porteurs: ["Dame Arlequin"], anciens: ["Inari le Mélodieux"] },
-  { nom: "Poule", signif: "Personne chaude", porteurs: ["Snoop Doug", "WreckingBi intronisée Tsunade"], anciens: ["Calipso"], ["L'Affranchie"], ["Marie-Antoinette"], ["KoukSAH"], ["La Rose Ecarlate"], ["Misstinguette"], ["Lady Cash"], ["Mata Hari"], ["Boule de Neige"], ["AK-40 PET"] },
-  { nom: "Cor de chasse", signif: "Grand chasseur devant l'éternel", porteurs: ["Quasar KO intronisé KRONOS"], anciens: ["Amazonass III intronisée Pandora"], ["Shit Sale"], ["Jean D Haddock"], ["Frère Luron"], ["Peter Paon intronisé Crazy HOErse"], ["Scandal"], ["Kiss Cool"], ["Queen B"], ["Fantomette"], ["Mister B"], ["Ms Hyde"], ["Simba"], ["Le Byzantin"] },
-  { nom: "Scie", signif: "Blessure en évènement étudiant ayant nécessité une opération", porteurs: ["Sirius"], anciens: ["Kcalashnikoff 1.1"], ["Don KidShock"] },
-  { nom: "Brebis", signif: "Mouton", porteurs: ["Black Swan", "Quasar KO intronisé KRONOS","Titania"], anciens: ["Cerebrow"], ["Crazyfrog"] },
+  { nom: "Poule", signif: "Personne chaude", porteurs: ["Snoop Doug", "WreckingBi intronisée Tsunade"], anciens: ["Calipso", "L'Affranchie", "Marie-Antoinette", "KoukSAH", "La Rose Ecarlate", "Misstinguette", "Lady Cash", "Mata Hari", "Boule de Neige", "AK-40 PET"] },
+  { nom: "Cor de chasse", signif: "Grand chasseur devant l'éternel", porteurs: ["Quasar KO intronisé KRONOS"], anciens: ["Amazonass III intronisée Pandora", "Shit Sale", "Jean D Haddock", "Frère Luron", "Peter Paon intronisé Crazy HOErse", "Scandal", "Kiss Cool", "Queen B", "Fantomette", "Mister B", "Ms Hyde", "Simba", "Le Byzantin"] },
+  { nom: "Scie", signif: "Blessure en évènement étudiant ayant nécessité une opération", porteurs: ["Sirius"], anciens: ["Kcalashnikoff 1.1", "Don KidShock"] },
+  { nom: "Brebis", signif: "Mouton", porteurs: ["Black Swan", "Quasar KO intronisé KRONOS", "Titania"], anciens: ["Cerebrow", "Crazyfrog"] },
   { nom: "Ours", signif: "Gros râleur", porteurs: ["Gulliver intronisé Khal Drogo", "Atlas l'Insoumis", "Rey", "Freyja"], anciens: [] },
   { nom: "Hache", signif: "Acte héroïque / A ramené un trophée", porteurs: ["Gulliver intronisé Khal Drogo", "Bakkus Krassus", "Onyx intronisée La Peintresse", "Belmondo intronisé Dante", "Quasar KO intronisé KRONOS", "Arlo", "MadJackAss", "Spirit", "Auguste", "Carmen", "Kirby", "Néo intronisé Dracarys réintronisé Haku 2.0"], anciens: [] },
-  { nom: "Zéro", signif: "Mort avant minuit", porteurs: ["Néo intronisé Dracarys réintronisé Haku 2.0"], anciens: ["Shit Sale"], ["Nosferatu"], ["Nutz"], ["AK-40 PET"], ["Belzepute"] },
+  { nom: "Zéro", signif: "Mort avant minuit", porteurs: ["Néo intronisé Dracarys réintronisé Haku 2.0"], anciens: ["Shit Sale", "Nosferatu", "Nutz", "AK-40 PET", "Belzepute"] },
   { nom: "Koala", signif: "Force tranquille", porteurs: ["Onyx intronisée La Peintresse", "Fu J.Yama"], anciens: [] },
-  { nom: "Clé de Sol", signif: "Digne chanteur de paillarde", porteurs: ["Bartholomeus", "Oompa Loumpette", "Belmondo intronisé Dante"], anciens: ["Dexter"], ["Billy Jones l'Exalté"], ["Inari le Mélodieux"], ["BawdygHard"], ["Blanche Neige"], ["Django"], ["Duper BizHard"], ["Fantasia"], ["Molière le Philanthrope"], ["Petit Jean du Grandgousier"], ["Maximathor"], ["Tony Tony Choper"], ["Maître Lupin"], ["AK-40 PET"], ["No Woman No Cry"], ["THOR"], ["Mike Drup"], ["Nimbus"] },
+  { nom: "Clé de Sol", signif: "Digne chanteur de paillarde", porteurs: ["Bartholomeus", "Oompa Loumpette", "Belmondo intronisé Dante"], anciens: ["Dexter", "Billy Jones l'Exalté", "Inari le Mélodieux", "BawdygHard", "Blanche Neige", "Django", "Duper BizHard", "Fantasia", "Molière le Philanthrope", "Petit Jean du Grandgousier", "Maximathor", "Tony Tony Choper", "Maître Lupin", "AK-40 PET", "No Woman No Cry", "THOR", "Mike Drup", "Nimbus"] },
   { nom: "Tête de mort croisé lyre", signif: "Piètre chanteur de paillardes", porteurs: [], anciens: ["Gargantua"] },
-  { nom: "Singe", signif: "Quémandeur d'insigne", porteurs: ["Kirby"], ["Le Soliste"], anciens: ["Bès le Furieux"], ["Bagheera"], ["Lutopique"] },
-  { nom: "Abeille sur circulaire", signif: "Cursus exemplaire", porteurs: [], anciens: ["BawdygHard"], ["Le Phœnix"], ["Axolotl"], ["Billy Jones l'Exalté"], ["De Bovary"], ["Maître Lupin"], ["Frère Luron"] },
-  { nom: "Abeille sur ruban d'asso", signif: "Travail et minutie associative", porteurs: ["Kirby"], anciens: ["Robin des Bois intronisé Liber Pater"], ["NimphéAH!"], ["Micromégas"], ["Swalalala"], ["Boule de Neige"] },
-  { nom: "Abeille sur ruban d'élu", signif: "Travail et minutie dans la représentation", porteurs: [], anciens: ["Morpheus"], ["Mike Drup"] },
+  { nom: "Singe", signif: "Quémandeur d'insigne", porteurs: ["Kirby", "Le Soliste"], anciens: ["Bès le Furieux", "Bagheera", "Lutopique"] },
+  { nom: "Abeille sur circulaire", signif: "Cursus exemplaire", porteurs: [], anciens: ["BawdygHard", "Le Phœnix", "Axolotl", "Billy Jones l'Exalté", "De Bovary", "Maître Lupin", "Frère Luron"] },
+  { nom: "Abeille sur ruban d'asso", signif: "Travail et minutie associative", porteurs: ["Kirby"], anciens: ["Robin des Bois intronisé Liber Pater", "NimphéAH!", "Micromégas", "Swalalala", "Boule de Neige"] },
+  { nom: "Abeille sur ruban d'élu", signif: "Travail et minutie dans la représentation", porteurs: [], anciens: ["Morpheus", "Mike Drup"] },
   { nom: "Abeille sur ruban de croix", signif: "Travail et minutie dans la croix", porteurs: [], anciens: ["Matoaka intronisée La Louve"] },
   { nom: "Palme sur ruban d'asso", signif: "Remerciement pour travail associatif", porteurs: ["Zaza la Débrouille", "Colombe"], anciens: [] },
   { nom: "Double palme sur ruban d'asso", signif: "Grand remerciement pour travail associatif", porteurs: [], anciens: [] },
-  { nom: "Bouteille de Bordeaux", signif: "Cuite certifiée", porteurs: [], anciens: ["Simplet"], ["Achille le Saltimbanque"], ["Atlantis"], ["Wild Weed Oh"], ["Misstitch"] },
-  { nom: "Bouteille de Champagne", signif: "Coma éthylique certifié", porteurs: ["Catarina"], anciens: ["Glasgow"], ["Forest"] },
-  { nom: "Chope de bière sur velours bordeaux", signif: "Vainqueur au festibière", porteurs: ["Delirium 7remance"], ["Quasar KO intronisé KRONOS"], ["Gulliver intronisé Khal Drogo"], anciens: ["Billy Jones l'Exalté"] },
-  { nom: "Ciseaux croisé 0", signif: "S'est rasé la tête en évènement étudiant", porteurs: ["Iris de Yourcenar"], ["Bartholomeus"], ["Dame Arlequin"], anciens: ["Sans Plomb 98 intronisé Kim Jong Weed"] },
-  { nom: "Comète", signif: "Electron libre", porteurs: ["Raven"], anciens: ["Marie-Antoinette"], ["Talkie-Walkie"], ["Athéna"], ["Brainbowt33n"], ["Divan de Kamp intronisé Khaleesi"], ["Armor Amore"] },
-  { nom: "Locomotive", signif: "Elément moteur", porteurs: ["Bartholomeus"], anciens: ["Rainha Bianca"], ["Billy Jones l'Exalté"], ["Bès le Furieux"], ["Petit Jean du Grandgousier"] },
-  { nom: "Marteau croisé Maillet", signif: "Prend de justes décisions", porteurs: [], anciens: ["Kiddo"], ["Hercule"] },
-  { nom: "Papillon", signif: "Elégant devant l'Eternel", porteurs: ["Invicthum intronisé Jacquemuse"], anciens: ["La Castafiore"], ["Oscar le Sartorial"], ["De Bovary"] },
-  { nom: "Serpent", signif: "Langue de pute", porteurs: [], anciens: ["Mercury"], ["Art Pop !"], ["Peter Paon intronisé Crazy HOErse"] },
-  { nom: "Torche", signif: "Lumière", porteurs: ["YMIR"], anciens: ["Le Phœnix"], ["Calipso"], ["Neville"], ["Pippin de la Comté"] },
-  { nom: "Balance", signif: "Poucave", porteurs: [], anciens: ["Inari le Mélodieux"], ["Yggdrasil"] },
-  { nom: "Vilebrequin", signif: "Forceur devant l'Eternel", porteurs: ["Merryadoc"], ["Auguste"], ["Volt intronisé Argos"], anciens: ["Art Pop !"], ["Artémus de Rochefort"] },
-  { nom: "Ecureuil sur ruban pailleté", signif: "Boule d'énergie", porteurs: ["Jean le Clown intronisé Nika", "Sirius"], anciens: ["Rainha Bianca"], ["Calcifer"], ["Crasse Noisette"], ["Talkie-Walkie"], ["GaLacSie"] }
+  { nom: "Bouteille de Bordeaux", signif: "Cuite certifiée", porteurs: [], anciens: ["Simplet", "Achille le Saltimbanque", "Atlantis", "Wild Weed Oh", "Misstitch"] },
+  { nom: "Bouteille de Champagne", signif: "Coma éthylique certifié", porteurs: ["Catarina"], anciens: ["Glasgow", "Forest"] },
+  { nom: "Chope de bière sur velours bordeaux", signif: "Vainqueur au festibière", porteurs: ["Delirium 7remance", "Quasar KO intronisé KRONOS", "Gulliver intronisé Khal Drogo"], anciens: ["Billy Jones l'Exalté"] },
+  { nom: "Ciseaux croisé 0", signif: "S'est rasé la tête en évènement étudiant", porteurs: ["Iris de Yourcenar", "Bartholomeus", "Dame Arlequin"], anciens: ["Sans Plomb 98 intronisé Kim Jong Weed"] },
+  { nom: "Comète", signif: "Electron libre", porteurs: ["Raven"], anciens: ["Marie-Antoinette", "Talkie-Walkie", "Athéna", "Brainbowt33n", "Divan de Kamp intronisé Khaleesi", "Armor Amore"] },
+  { nom: "Locomotive", signif: "Elément moteur", porteurs: ["Bartholomeus"], anciens: ["Rainha Bianca", "Billy Jones l'Exalté", "Bès le Furieux", "Petit Jean du Grandgousier"] },
+  { nom: "Marteau croisé Maillet", signif: "Prend de justes décisions", porteurs: [], anciens: ["Kiddo", "Hercule"] },
+  { nom: "Papillon", signif: "Elégant devant l'Eternel", porteurs: ["Invicthum intronisé Jacquemuse"], anciens: ["La Castafiore", "Oscar le Sartorial", "De Bovary"] },
+  { nom: "Serpent", signif: "Langue de pute", porteurs: [], anciens: ["Mercury", "Art Pop !", "Peter Paon intronisé Crazy HOErse"] },
+  { nom: "Torche", signif: "Lumière", porteurs: ["YMIR"], anciens: ["Le Phœnix", "Calipso", "Neville", "Pippin de la Comté"] },
+  { nom: "Balance", signif: "Poucave", porteurs: [], anciens: ["Inari le Mélodieux", "Yggdrasil"] },
+  { nom: "Vilebrequin", signif: "Forceur devant l'Eternel", porteurs: ["Merryadoc", "Auguste", "Volt intronisé Argos"], anciens: ["Art Pop !", "Artémus de Rochefort"] },
+  { nom: "Ecureuil sur ruban pailleté", signif: "Boule d'énergie", porteurs: ["Jean le Clown intronisé Nika", "Sirius"], anciens: ["Rainha Bianca", "Calcifer", "Crasse Noisette", "Talkie-Walkie", "GaLacSie"] }
 ];
 
 let deck = DATA.slice();
