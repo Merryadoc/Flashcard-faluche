@@ -31,15 +31,31 @@
     text-align: center; color: var(--text-2); font-size: 14px;
     margin-bottom: 2.5rem;
   }
-  .card-link {
-    display: block; padding: 1.25rem 1.5rem; margin-bottom: 12px;
-    background: var(--surface); border: 0.5px solid var(--border);
-    border-radius: 14px; text-decoration: none; color: var(--text);
-    transition: transform 0.15s ease, border-color 0.15s ease;
+  .cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.card-link {
+  display: block;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.card-link:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
   }
-  .card-link:hover {
-    transform: translateY(-2px); border-color: var(--accent);
-  }
+}
   .card-icon { font-size: 28px; margin-bottom: 6px; }
   .card-title { font-size: 17px; font-weight: 500; margin-bottom: 4px; }
   .card-desc { font-size: 13px; color: var(--text-2); }
@@ -54,6 +70,7 @@
     <h1>🎓 Flashcards Faluche</h1>
     <p class="subtitle">Choisis une catégorie pour commencer à réviser</p>
 
+    <div class="cards-grid">
     <a class="card-link" href="flashcards_decernements_faluche">
       <div class="card-icon">🏆</div>
       <div class="card-title">Décernements</div>
@@ -77,6 +94,7 @@
       <div class="card-title">Insignes, Élus, Région & Sanctions</div>
       <div class="card-desc">37 cartes en 4 onglets</div>
     </a>
+    </div>
 
     <div class="footer">Bonne révision !</div>
   </div>
