@@ -1,1 +1,85 @@
 # Flashcard-faluche
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcards Faluche</title>
+<style>
+  :root {
+    --bg: #faf9f5; --surface: #ffffff;
+    --text: #1a1a1a; --text-2: #6b6b6b; --text-3: #a0a0a0;
+    --border: rgba(0,0,0,0.1); --accent: #1a1a1a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a; --surface: #2a2a2a;
+      --text: #f0f0f0; --text-2: #a0a0a0; --text-3: #6b6b6b;
+      --border: rgba(255,255,255,0.1); --accent: #f0f0f0;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 3rem 1rem; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+  }
+  .wrap { width: 100%; max-width: 520px; }
+  h1 {
+    font-size: 26px; font-weight: 500; margin: 0 0 0.5rem; text-align: center;
+  }
+  .subtitle {
+    text-align: center; color: var(--text-2); font-size: 14px;
+    margin-bottom: 2.5rem;
+  }
+  .card-link {
+    display: block; padding: 1.25rem 1.5rem; margin-bottom: 12px;
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: 14px; text-decoration: none; color: var(--text);
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .card-link:hover {
+    transform: translateY(-2px); border-color: var(--accent);
+  }
+  .card-icon { font-size: 28px; margin-bottom: 6px; }
+  .card-title { font-size: 17px; font-weight: 500; margin-bottom: 4px; }
+  .card-desc { font-size: 13px; color: var(--text-2); }
+  .footer {
+    margin-top: 2rem; text-align: center; font-size: 11px;
+    color: var(--text-3);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>🎓 Flashcards Faluche</h1>
+    <p class="subtitle">Choisis une catégorie pour commencer à réviser</p>
+
+    <a class="card-link" href="Flashcards_decernements_faluche.html">
+      <div class="card-icon">🏆</div>
+      <div class="card-title">Décernements</div>
+      <div class="card-desc">36 cartes — Bacchus, Sou troué, Hache, Cor de chasse...</div>
+    </a>
+
+    <a class="card-link" href="Flashcards_ordres_faluche_v2.html">
+      <div class="card-icon">⚜️</div>
+      <div class="card-title">Ordres</div>
+      <div class="card-desc">14 cartes — Narco, Grelots, Nakama, Big Boobs...</div>
+    </a>
+
+    <a class="card-link" href="Flashcards_rubans_faluche_v2.html">
+      <div class="card-icon">🎀</div>
+      <div class="card-title">Rubans</div>
+      <div class="card-desc">27 cartes — A2SUP, CRS, Hygie, OTC, Solid'UP...</div>
+    </a>
+
+    <a class="card-link" href="Flashcards_insignes_elus_region_sanctions.html">
+      <div class="card-icon">🪙</div>
+      <div class="card-title">Insignes, Élus, Région & Sanctions</div>
+      <div class="card-desc">37 cartes en 4 onglets</div>
+    </a>
+
+    <div class="footer">Bonne révision !</div>
+  </div>
+</body>
+</html>
