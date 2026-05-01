@@ -95,7 +95,7 @@
   .fc-card {
     position: relative;
     width: 100%;
-    min-height: 340px;
+    min-height: 480px;
     cursor: pointer;
     transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
     transform-style: preserve-3d;
@@ -112,7 +112,7 @@
     background: var(--surface);
     border: 0.5px solid var(--border);
     border-radius: 14px;
-    overflow: hidden;
+    overflow: auto;
   }
   .fc-front {
     align-items: center;
@@ -179,14 +179,12 @@
     font-style: italic;
   }
   .fc-hint {
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 11px;
-    color: var(--text-3);
-  }
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: auto;
+  padding-top: 10px;
+}
   .fc-controls {
     display: flex;
     gap: 8px;
